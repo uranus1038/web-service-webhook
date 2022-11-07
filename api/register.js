@@ -43,7 +43,7 @@ const userName = server.post("/userName-verify", (req, res)=>{
 //verify nametag
 const name = server.post("/name-verify", (req, res)=>{
     console.log( req.body.name );
-    UMI.execute("SELECT userName FROM accouts WHERE userName = ?" , [req.body.name] ,)
+    UMI.execute("SELECT nametag FROM accouts WHERE nametag = ?" , [req.body.name] ,)
     .then(([rows])=>
     {
         if(rows.length > 0)
@@ -57,8 +57,19 @@ const name = server.post("/name-verify", (req, res)=>{
         }
     });
 });
-
+//register
+const register = server.post("/success", (req, res)=>{
+    const {email ,brithday ,userName,passWord ,gender,nametag , } = req.body ;
+    let date = new Date();
+    UMI.execute("INSERT INTO accouts (email,brithday,userName,passWord,gender,nametag ,date) VALUES(?,?,?,?,?,?,?) ",
+     [email ,brithday ,userName , passWord , gender , nametag , date.toString() ])
+    .then((result)=>
+    {
+        return res.send({status : 'ok'});
+    });
+});
 
 module.exports = email ;
 module.exports = userName;
 module.exports = name;
+module.exports = register;
