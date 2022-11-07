@@ -6,21 +6,59 @@ const UMI = require('../config/UMIConnect') ;
 server.use(express.json()); 
 server.use(express.urlencoded({extended : false}));
 
-const email = server.post("/email-validate", (req, res)=>{
+//verify email 
+const email = server.post("/email-verify", (req, res)=>{
     console.log( req.body.email );
-    UMI.execute("SELECT * FROM accouts WHERE email = ?" , [req.body.email] ,)
+    UMI.execute("SELECT email FROM accouts WHERE email = ?" , [req.body.email] ,)
     .then(([rows])=>
     {
         if(rows.length > 0)
         {
             console.log("yes");
-            return res.send({status : 'ok'});
+            return res.send({status : 'no'});
         }else
         {
             console.log("No");
+            return res.send({status : 'ok'});
+        }
+    });
+});
+//verify userName
+const userName = server.post("/userName-verify", (req, res)=>{
+    console.log( req.body.userName );
+    UMI.execute("SELECT userName FROM accouts WHERE userName = ?" , [req.body.userName] ,)
+    .then(([rows])=>
+    {
+        if(rows.length > 0)
+        {
+            console.log("yes");
             return res.send({status : 'no'});
+        }else
+        {
+            console.log("No");
+            return res.send({status : 'ok'});
+        }
+    });
+});
+//verify nametag
+const name = server.post("/name-verify", (req, res)=>{
+    console.log( req.body.name );
+    UMI.execute("SELECT userName FROM accouts WHERE userName = ?" , [req.body.name] ,)
+    .then(([rows])=>
+    {
+        if(rows.length > 0)
+        {
+            console.log("yes");
+            return res.send({status : 'no'});
+        }else
+        {
+            console.log("No");
+            return res.send({status : 'ok'});
         }
     });
 });
 
-module.exports = email
+
+module.exports = email ;
+module.exports = userName;
+module.exports = name;
