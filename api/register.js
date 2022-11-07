@@ -62,7 +62,7 @@ const register = server.post("/success", (req, res)=>{
     const {email ,brithday ,userName,passWord ,gender,nametag , } = req.body ;
     let date = new Date();
     UMI.execute("INSERT INTO accouts (email,brithday,userName,passWord,gender,nametag ,date) VALUES(?,?,?,?,?,?,?) ",
-     [email ,brithday ,userName , passWord , gender , nametag , date.toString() ])
+     [email ,brithday ,userName , passWord , gender , nametag , date ])
     .then((result)=>
     {
         return res.send({status : 'ok'});
