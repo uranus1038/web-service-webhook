@@ -1,4 +1,5 @@
 const express = require('express');
+const bcrypt = require('bcrypt')
 const server = express() ;
 //db config
 const UMI = require('../config/UMIConnect') ; 
@@ -58,13 +59,15 @@ const name = server.post("/name-verify", (req, res)=>{
     });
 });
 //register
-const register = server.post("/success", (req, res)=>{
+const register = server.post("/success",(req, res)=>{
     const {email ,brithday ,userName,passWord ,gender,nametag , } = req.body ;
-    let date = new Date();
+    const  date = new Date();
+    const passHash =  bcrypt.hashSync(passWord,10);
     UMI.execute("INSERT INTO accouts (email,brithday,userName,passWord,gender,nametag ,date) VALUES(?,?,?,?,?,?,?) ",
-     [email ,brithday ,userName , passWord , gender , nametag , date ])
+     [email ,brithday ,userName , passHash , gender , nametag , date ])
     .then((result)=>
     {
+        console.log("register successed");
         return res.send({status : 'ok'});
     });
 });

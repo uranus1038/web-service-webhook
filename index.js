@@ -9,9 +9,11 @@ server.use(cors()) ;
 
 // api 
 const register = require('./api/register');
+const login = require('./api/login');
 
 // route api 
-server.use('/api/register',register)
+server.use('/api/register',register);
+server.use('/api/login',login);
 
 server.listen('8000' , ()=> {
     console.log('server starting to port > 8000');
