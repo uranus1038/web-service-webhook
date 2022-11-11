@@ -14,8 +14,7 @@ const login = server.post("/login", (req, res) => {
         [req.body.userName],)
         .then(([rows]) => {
             if (rows.length === 1) {
-                console.log(rows[0].passWord);
-                if ( bcrypt.compareSync(req.body.passWord, rows[0].passWord)) {
+                if ( bcrypt.compareSync(req.body.passWord, rows[0].passWord) ) {
                     console.log("Yes");
                     return res.send({ status: 'ok' })
                 } else {
