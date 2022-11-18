@@ -13,6 +13,7 @@ const login = server.post("/login", (req, res) => {
     UMI.execute("SELECT * FROM accouts WHERE userName = ?   ",
         [req.body.userName],)
         .then(([rows]) => {
+            // if Data user = 1 ;
             if (rows.length === 1) {
                 if ( bcrypt.compareSync(req.body.passWord, rows[0].passWord) ) {
                     console.log("Yes");
